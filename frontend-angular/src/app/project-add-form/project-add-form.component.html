@@ -1,0 +1,63 @@
+
+<div>
+    <button class="btn m-5 btn-primary" [routerLink]="['/projectList']">Project List</button>
+</div>
+<div class="customContainer">
+    <form [formGroup]="projectForm" (ngSubmit)="submitForm()">
+        <div class="form-group">
+          <label for="nameField">Project name</label>
+          <input type="name" class="form-control" id="nameField" aria-describedby="nameHelp" placeholder="Enter name"
+          formControlName="name">
+        </div>
+        <div class="form-group">
+            <label for="satatus">Project status</label>
+            <select class="form-control" id="satatus" formControlName="status" #status>
+              <option value="0">Pre</option>
+              <option value="1">Start</option>
+              <option value="3">End</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" class="form-control" id="startDate"
+            formControlName="startDate"
+            aria-describedby="nameHelp" placeholder="Enter Start Date">
+          </div>
+          <div class="form-group" *ngIf="status.value != '0'">
+            <label for="endDate">End Date</label>
+            <input type="date" class="form-control" id="endDate"
+            formControlName="endDate"
+            aria-describedby="nameHelp" placeholder="Enter End Date">
+          </div>
+          <div class="form-group">
+
+          </div>
+
+          <!-- ---------------- -->
+          <label for="satatus">Select Project Member</label>
+          <br>
+          <button
+          class="btn btn-sm btn-primary my-2"
+          type="button"
+          (click)="addRequirement()">
+            Add Member
+          </button> <br>
+          <ng-container formGroupName="memberId">
+            <div class="col-6" *ngFor="let c of keywordGroup.controls; let i = index;
+            let count = count">
+              <div class="form-group" >
+                <label>Member {{i + 1}}</label>
+
+                <select class="form-control" id="satatus"  [formControlName]="i">
+                  <option *ngFor="let user of users" [value]="user.id">{{user.firstName + " " + user.lastName}}</option>
+                </select>
+                <button  aria-label="Clear"
+                   (click)="removeRequirement(i)"> X
+                </button>
+              </div>
+            </div>
+          </ng-container>
+
+        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+      </form>
+</div>

@@ -1,0 +1,53 @@
+
+<div>
+  <button class="btn m-5 btn-primary" [routerLink]="['/projectAddForm']"> Add Project</button>
+  <button class="btn m-5 btn-danger" (click)="logOut()">Log Out</button>
+</div>
+
+<div>
+  <h1>Username: {{ username ?? ""}}</h1>
+</div>
+
+<h1 class="text-center m-0">Project List</h1>
+    <table class="table w-50 table-striped mx-auto">
+      <thead><tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Owner</th>
+          <th>Status</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Member List</th>
+          <th></th>
+      </tr></thead>
+      <tbody>
+          <tr *ngFor="let project of projects; let i = index">
+            <td> {{i + 1}}  </td>
+            <td> {{ project.name}}  </td>
+            <td> {{ project.owner?.firstName + " " + project.owner?.lastName}}  </td>
+            <td> {{project.status}} </td>
+            <td> {{ project.startDate | date: 'longDate'}}  </td>
+            <td> {{ project.endDate | date: 'longDate'}}  </td>
+            <td>
+              <table>
+                <thead></thead>
+                <tbody>
+                  <tr *ngFor="let member of project.members">
+                    <td>{{member.firstName}}</td>
+                  </tr>
+                </tbody>
+            </table>
+           </td>
+            <td>
+                  <button class="btn btn-primary" [routerLink]="['/projectAddForm', project.id]">
+                    <i class="fa-solid fa-pen-to-square textColor"></i>
+                    Update
+                  </button>
+                  <button class="btn btn-danger" (click)="deleteDialog(project.id)">
+                    <i class="fa-solid fa-file-invoice-dollar textColor"></i>
+                    Delete
+                  </button>
+            </td>
+          </tr>
+      </tbody>
+    </table>
